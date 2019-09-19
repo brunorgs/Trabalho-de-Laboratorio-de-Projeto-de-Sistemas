@@ -1,26 +1,24 @@
 package com.example.corretordegabarito;
 
-public class Foto {
+public abstract class Foto {
     private int largura;
     private int altura;
     private String nomearquivo;
     private long tamanho;
     private String caminhoarquivo;
     private String formato;
-    private char tipo;
 
     /**
-     * Construtor da classe.
+     * Construtor da classe abstrata.
      * @param largura - Largura da foto
      * @param altura - Altura da foto
      * @param nomearquivo - Nome do arquivo da foto
      * @param tamanho - Tamanho da foto
      * @param caminhoarquivo - Caminho do arquivo da foto
      * @param formato - Formato da foto
-     * @param tipo - Tipo da foto
      */
 
-    public Foto (int largura,int altura,String nomearquivo,long tamanho,String caminhoarquivo,String formato,char tipo)
+    public Foto (int largura,int altura,String nomearquivo,long tamanho,String caminhoarquivo,String formato)
     {
         this.largura = largura;
         this.altura = altura;
@@ -28,16 +26,6 @@ public class Foto {
         this.tamanho = tamanho;
         this.caminhoarquivo = caminhoarquivo;
         this.formato = formato;
-        this.tipo = tipo;
-    }
-
-    /**
-     * Retorna o tipo da foto.
-     * @return char tipo
-     */
-
-    public char getTipo() {
-        return tipo;
     }
 
     /**
@@ -146,14 +134,5 @@ public class Foto {
 
     public void setTamanho(long tamanho) {
         this.tamanho = tamanho;
-    }
-
-    /**
-     * Seta o tipo da foto.
-     * @param tipo char
-     */
-
-    public void setTipo(char tipo) {
-        this.tipo = tipo;
     }
 }
