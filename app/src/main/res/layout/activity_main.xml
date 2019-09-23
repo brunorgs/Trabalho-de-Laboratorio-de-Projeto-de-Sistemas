@@ -21,10 +21,16 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/corrigir"
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
-        android:layout_margin="50pt"/>
+        android:layout_marginStart="50pt"
+        android:layout_marginLeft="50pt"
+        android:layout_marginTop="50pt"
+        android:layout_marginEnd="50pt"
+        android:layout_marginRight="50pt"
+        android:layout_marginBottom="50pt"
+        android:background="@color/colorPrimary"
+        android:text="@string/corrigir" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
