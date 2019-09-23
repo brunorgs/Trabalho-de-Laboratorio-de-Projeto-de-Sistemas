@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Corretor de Gabarito</string>
+    <string name="corrigir">CORRIGIR</string>
+    <string name="branco">Branco</string>
+    <string name="oficial">Oficial</string>
+    <string name="aluno">Aluno</string>
+    <string name="corretor">CORRETOR</string>
+    <string name="de">DE</string>
+    <string name="gabarito">GABARITO</string>
 </resources>
