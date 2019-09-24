@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -34,6 +36,23 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+        File diretorio = contextWrapper.getDir("imageDir",Context.MODE_PRIVATE);
+        File file = new File(diretorio,"Branco.png");
+        if (file.exists())
+        {
+            file.delete();
+        }
+        file = new File(diretorio,"Oficial.png");
+        if (file.exists())
+        {
+            file.delete();
+        }
+        file = new File(diretorio,"Aluno.png");
+        if (file.exists())
+        {
+            file.delete();
+        }
     }
 
     public void abrirCamera(View view)
@@ -193,5 +212,33 @@ public class MainActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+    }
+
+    public void MostrarFotos(View view)
+    {
+        final AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
+        ImageView imageView = new ImageView(this);
+        ImageView imageView1 = new ImageView(this);
+        ImageView imageView2 = new ImageView(this);
+        CarregarImagem(imageView,imageView1,imageView2);
+        imageView.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        imageView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        imageView1.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        imageView1.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        imageView2.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        imageView2.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.addView(imageView);
+        linearLayout.addView(imageView1);
+        linearLayout.addView(imageView2);
+        alertdialog.setView(linearLayout);
+        alertdialog.setNeutralButton("FECHAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertdialog.show();
     }
 }
