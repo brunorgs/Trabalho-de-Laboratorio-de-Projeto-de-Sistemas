@@ -30,6 +30,10 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
+    ImageView imageView;
+    ImageView imageView1;
+    ImageView imageView2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void CarregarImagem(ImageView imageView,ImageView imageView2,ImageView imageView3)
+    public void CarregarImagem()
     {
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File diretorio = contextWrapper.getDir("imageDir",Context.MODE_PRIVATE);
@@ -186,30 +190,36 @@ public class MainActivity extends AppCompatActivity {
         {
             File file = new File(diretorio,"Branco.png");
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+            imageView = new ImageView(this);
             imageView.setImageBitmap(bitmap);
         }
         catch (FileNotFoundException e)
         {
+            imageView = null;
             e.printStackTrace();
         }
         try
         {
             File file = new File(diretorio,"Oficial.png");
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            imageView2.setImageBitmap(bitmap);
+            imageView1 = new ImageView(this);
+            imageView1.setImageBitmap(bitmap);
         }
         catch (FileNotFoundException e)
         {
+            imageView1 = null;
             e.printStackTrace();
         }
         try
         {
             File file = new File(diretorio,"Aluno.png");
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            imageView3.setImageBitmap(bitmap);
+            imageView2 = new ImageView(this);
+            imageView2.setImageBitmap(bitmap);
         }
         catch (FileNotFoundException e)
         {
+            imageView2 = null;
             e.printStackTrace();
         }
     }
@@ -217,21 +227,30 @@ public class MainActivity extends AppCompatActivity {
     public void MostrarFotos(View view)
     {
         final AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
-        ImageView imageView = new ImageView(this);
-        ImageView imageView1 = new ImageView(this);
-        ImageView imageView2 = new ImageView(this);
-        CarregarImagem(imageView,imageView1,imageView2);
-        imageView.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
-        imageView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
-        imageView1.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
-        imageView1.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
-        imageView2.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
-        imageView2.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,300,getResources().getDisplayMetrics());
+        CarregarImagem();
+        if (imageView != null) {
+            imageView.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+            imageView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+        }
+        if (imageView1 != null) {
+            imageView1.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+            imageView1.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+        }
+        if (imageView2 != null) {
+            imageView2.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+            imageView2.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, 300, getResources().getDisplayMetrics());
+        }
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(imageView);
-        linearLayout.addView(imageView1);
-        linearLayout.addView(imageView2);
+        if (imageView != null) {
+            linearLayout.addView(imageView);
+        }
+        if (imageView1 != null) {
+            linearLayout.addView(imageView1);
+        }
+        if (imageView2 != null) {
+            linearLayout.addView(imageView2);
+        }
         alertdialog.setView(linearLayout);
         alertdialog.setNeutralButton("FECHAR", new DialogInterface.OnClickListener() {
             @Override
@@ -239,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        alertdialog.show();
+        if (imageView != null || imageView1 != null || imageView2 != null) {
+            alertdialog.show();
+        }
     }
 }
