@@ -7,15 +7,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -29,13 +25,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-
-    ArrayList<String> nomeimagem = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             radioGroup.addView(radioButton);
             radioGroup.addView(radioButton1);
             radioGroup.addView(radioButton2);
-            radioGroup.setDividerDrawable(new ColorDrawable(Color.BLUE));
             ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
             final LinearLayout linearLayout = new LinearLayout(this);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -94,18 +84,15 @@ public class MainActivity extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
                     File diretorio = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-                    String datafoto = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
-                    String nomefoto = "PNG_" + datafoto + "_";
-                    File caminho = new File(diretorio,nomefoto);
                     FileOutputStream fileOutputStream = null;
                     RadioButton radioButton3 = linearLayout.findViewById(radioGroup.getCheckedRadioButtonId());
                     String s = radioButton3.getText().toString();
                     if (s.equals("Branco"))
                     {
                         try {
+                            File caminho = new File(diretorio,"Branco.png");
                             fileOutputStream = new FileOutputStream(caminho);
                             bitmap.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);
-                            nomeimagem.add(nomefoto);
                             Toast.makeText(MainActivity.this,"Gabarito do tipo branco inserido com sucesso!",Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
@@ -125,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                     else if(s.equals("Oficial"))
                     {
                         try {
+                            File caminho = new File(diretorio,"Oficial.png");
                             fileOutputStream = new FileOutputStream(caminho);
                             bitmap.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);
-                            nomeimagem.add(nomefoto);
                             Toast.makeText(MainActivity.this,"Gabarito do tipo oficial inserido com sucesso!",Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
@@ -147,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
                     else if(s.equals("Aluno"))
                     {
                         try {
+                            File caminho = new File(diretorio,"Aluno.png");
                             fileOutputStream = new FileOutputStream(caminho);
                             bitmap.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);
-                            nomeimagem.add(nomefoto);
                             Toast.makeText(MainActivity.this,"Gabarito do tipo aluno inserido com sucesso!",Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
@@ -172,14 +159,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void CarregarImagem()
+    public void CarregarImagem(ImageView imageView,ImageView imageView2,ImageView imageView3)
     {
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File diretorio = contextWrapper.getDir("imageDir",Context.MODE_PRIVATE);
         try
         {
-            File file = new File(diretorio,nomeimagem.get(nomeimagem.size()-1));
+            File file = new File(diretorio,"Branco.png");
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+            imageView.setImageBitmap(bitmap);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            File file = new File(diretorio,"Oficial.png");
+            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+            imageView2.setImageBitmap(bitmap);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            File file = new File(diretorio,"Aluno.png");
+            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+            imageView3.setImageBitmap(bitmap);
         }
         catch (FileNotFoundException e)
         {
