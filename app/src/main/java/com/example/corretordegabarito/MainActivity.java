@@ -2,11 +2,7 @@ package com.example.corretordegabarito;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,13 +10,10 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -30,6 +23,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     String s = "";
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Branco.jpg");
         if (file.exists())
         {
@@ -144,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void MostrarFotos(View view) throws Exception
+    public void MostrarFotos(View view)
     {
         Intent intent = new Intent(this,mostrarfotos.class);
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Branco.jpg");
@@ -152,7 +148,19 @@ public class MainActivity extends AppCompatActivity {
         File file2 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Aluno.jpg");
         if (file.exists() || file1.exists() || file2.exists())
         {
+            progressBar.setVisibility(View.VISIBLE);
             startActivity(intent);
         }
+        else
+        {
+            Toast.makeText(this,"Nenhuma foto inserida!",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
 }
