@@ -81,7 +81,7 @@ public class mostrarfotos extends AppCompatActivity {
             {
                 matrix.postRotate(270);
             }
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
             Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
             imageView1.setImageBitmap(bitmap1);
         }
@@ -114,7 +114,7 @@ public class mostrarfotos extends AppCompatActivity {
             {
                 matrix.postRotate(270);
             }
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(file2.getAbsolutePath());
             Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
             imageView2.setImageBitmap(bitmap1);
         }

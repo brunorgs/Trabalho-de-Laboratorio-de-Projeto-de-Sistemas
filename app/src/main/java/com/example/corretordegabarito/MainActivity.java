@@ -29,6 +29,8 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    String s = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 RadioButton radioButton3 = linearLayout.findViewById(radioGroup.getCheckedRadioButtonId());
-                String s = radioButton3.getText().toString();
+                s = radioButton3.getText().toString();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (s.equals("Branco"))
                 {
@@ -95,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                         Uri uri = FileProvider.getUriForFile(getApplicationContext(),"com.example.corretordegabarito",foto);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
                         startActivityForResult(intent, 1);
-                        Toast.makeText(getApplicationContext(),"Gabarito do tipo branco inserido com sucesso!",Toast.LENGTH_LONG).show();
                     }
                 }
                 else if(s.equals("Oficial"))
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                         Uri uri = FileProvider.getUriForFile(getApplicationContext(),"com.example.corretordegabarito",foto);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
                         startActivityForResult(intent, 1);
-                        Toast.makeText(getApplicationContext(),"Gabarito do tipo oficial inserido com sucesso!",Toast.LENGTH_LONG).show();
                     }
                 }
                 else if(s.equals("Aluno"))
@@ -117,12 +117,31 @@ public class MainActivity extends AppCompatActivity {
                         Uri uri = FileProvider.getUriForFile(getApplicationContext(),"com.example.corretordegabarito",foto);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
                         startActivityForResult(intent, 1);
-                        Toast.makeText(getApplicationContext(),"Gabarito do tipo aluno inserido com sucesso!",Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
         alertdialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data)
+    {
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
+            if (s.equals("Branco"))
+            {
+                Toast.makeText(getApplicationContext(),"Gabarito do tipo branco inserido com sucesso!",Toast.LENGTH_LONG).show();
+            }
+            else if (s.equals("Oficial"))
+            {
+                Toast.makeText(getApplicationContext(),"Gabarito do tipo oficial inserido com sucesso!",Toast.LENGTH_LONG).show();
+            }
+            else if (s.equals("Aluno"))
+            {
+                Toast.makeText(getApplicationContext(),"Gabarito do tipo aluno inserido com sucesso!",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void MostrarFotos(View view) throws Exception
