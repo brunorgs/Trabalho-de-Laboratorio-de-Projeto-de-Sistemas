@@ -19,14 +19,15 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="30pt"
         android:layout_marginStart="30pt"
         android:layout_marginLeft="30pt"
-        android:text="@string/corrigir" />
+        android:layout_marginTop="30pt"
+        android:background="@color/colorPrimary"
+        android:onClick="MostrarFotos"
+        android:text="@string/mostrar" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -75,7 +76,7 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="132dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
         android:layout_marginStart="30pt"
@@ -84,8 +85,7 @@
         android:layout_toEndOf="@id/button"
         android:layout_toRightOf="@id/button"
         android:background="@color/colorPrimary"
-        android:onClick="MostrarFotos"
-        android:text="@string/mostrar" />
+        android:text="@string/corrigir" />
 
     <ProgressBar
         android:id="@+id/progressBar"
