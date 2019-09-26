@@ -4,7 +4,7 @@ public abstract class Foto {
     private int largura;
     private int altura;
     private String nomearquivo;
-    private long tamanho;
+    private int tamanho;
     private String caminhoarquivo;
     private String formato;
 
@@ -18,7 +18,7 @@ public abstract class Foto {
      * @param formato - Formato da foto
      */
 
-    public Foto (int largura,int altura,String nomearquivo,long tamanho,String caminhoarquivo,String formato)
+    public Foto (int largura,int altura,String nomearquivo,int tamanho,String caminhoarquivo,String formato)
     {
         this.largura = largura;
         this.altura = altura;
@@ -132,7 +132,7 @@ public abstract class Foto {
      * @param tamanho long
      */
 
-    public void setTamanho(long tamanho) {
+    public void setTamanho(int tamanho) {
         this.tamanho = tamanho;
     }
 }

@@ -2,7 +2,11 @@ package com.example.corretordegabarito;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     String s = "";
     ProgressBar progressBar;
+    Bitmap branco;
+    Bitmap oficial;
+    Bitmap aluno;
+    Aluno dadosFotoAluno;
+    Branco dadosFotoBranco;
+    Oficial dadosFotoOficial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,5 +172,70 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+    }
+
+    public void CarregarImagem()
+    {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Branco.jpg");
+        File file1 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Oficial.jpg");
+        File file2 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Aluno.jpg");
+        ExifInterface exifInterface = null;
+        if (file.exists()) {
+            try {
+                exifInterface = new ExifInterface(file.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            int orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Matrix matrix = new Matrix();
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            branco = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            dadosFotoBranco = new Branco(branco.getWidth(),branco.getHeight(),"Branco.jpg",branco.getByteCount(),file.getParent(),"JPEG");
+        }
+        if (file1.exists()) {
+            try {
+                exifInterface = new ExifInterface(file1.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            int orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Matrix matrix = new Matrix();
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
+            oficial = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            dadosFotoOficial = new Oficial(oficial.getWidth(),oficial.getHeight(),"Oficial.jpg",oficial.getByteCount(),file1.getParent(),"JPEG");
+        }
+        if (file2.exists()) {
+            try {
+                exifInterface = new ExifInterface(file2.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            int orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Matrix matrix = new Matrix();
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(file2.getAbsolutePath());
+            aluno = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            dadosFotoAluno = new Aluno(aluno.getWidth(),aluno.getHeight(),"Aluno.jpg",aluno.getByteCount(),file2.getParent(),"JPEG");
+        }
     }
 }

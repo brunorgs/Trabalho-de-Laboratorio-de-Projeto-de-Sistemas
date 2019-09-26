@@ -12,7 +12,7 @@ public class Oficial extends Foto {
      * @param formato - Formato da foto do tipo oficial
      */
 
-    public Oficial (int largura,int altura,String nomearquivo,long tamanho,String caminhoarquivo,String formato)
+    public Oficial (int largura,int altura,String nomearquivo,int tamanho,String caminhoarquivo,String formato)
     {
         super(largura,altura,nomearquivo,tamanho,caminhoarquivo,formato);
     }
