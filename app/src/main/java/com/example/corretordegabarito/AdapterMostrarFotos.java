@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import org.opencv.core.Mat;
+
 import java.io.File;
 
 public class AdapterMostrarFotos extends RecyclerView.Adapter<ViewHolderMostrarFotos> {
@@ -55,6 +57,10 @@ public class AdapterMostrarFotos extends RecyclerView.Adapter<ViewHolderMostrarF
             }
             Bitmap bitmap = BitmapFactory.decodeFile(file[position].getAbsolutePath());
             Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+            Mat colorida = OpenCV.convertBitmap2Mat(bitmap1);
+            Mat cinza = OpenCV.converterParaCinza(colorida);
+            Mat limiarizada = OpenCV.aplicarLimiarizacao(cinza);
+            bitmap1 = OpenCV.convertMat2Bitmap(limiarizada);
             viewHolderMostrarFotos.foto.setImageBitmap(bitmap1);
             if (file[position].getName().equals("Branco.jpg"))
             {

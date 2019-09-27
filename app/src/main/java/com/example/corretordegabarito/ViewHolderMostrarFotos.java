@@ -2,6 +2,7 @@ package com.example.corretordegabarito;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ViewHolderMostrarFotos extends RecyclerView.ViewHolder {
