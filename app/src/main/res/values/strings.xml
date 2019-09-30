@@ -7,5 +7,7 @@
     <string name="corretor">CORRETOR</string>
     <string name="de">DE</string>
     <string name="gabarito">GABARITO</string>
-    <string name="mostrar">MOSTRAR FOTOS</string>
+    <string name="mostrar">MOSTRAR ORIGINAL</string>
+    <string name="cinza">CINZA</string>
+    <string name="limiarizada">LIMIARIZADA</string>
 </resources>
