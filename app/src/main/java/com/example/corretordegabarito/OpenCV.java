@@ -12,7 +12,7 @@ public class OpenCV {
         Mat limiarizada = new Mat();
 
         Imgproc.adaptiveThreshold(imagem, limiarizada, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-                Imgproc.THRESH_BINARY, 115, 1);
+                Imgproc.THRESH_BINARY, 81, 20);
 
         return limiarizada;
     }
