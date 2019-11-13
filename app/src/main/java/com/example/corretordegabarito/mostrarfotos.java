@@ -24,9 +24,7 @@ public class mostrarfotos extends AppCompatActivity {
         File file1 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Branco.jpg");
         File file2 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Oficial.jpg");
         File file3 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Aluno.jpg");
-        Intent intent = getIntent();
-        char tipo = intent.getCharExtra("tipo",' ');
-        AdapterMostrarFotos adapterMostrarFotos = new AdapterMostrarFotos(file1,file2,file3,tipo);
+        AdapterMostrarFotos adapterMostrarFotos = new AdapterMostrarFotos(file1,file2,file3);
         recyclerView.setAdapter(adapterMostrarFotos);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

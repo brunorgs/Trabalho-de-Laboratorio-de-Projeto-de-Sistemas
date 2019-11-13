@@ -21,7 +21,7 @@
         android:id="@+id/button"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button2"
+        android:layout_below="@id/textView3"
         android:layout_marginStart="30pt"
         android:layout_marginLeft="30pt"
         android:layout_marginTop="20pt"
@@ -78,7 +78,7 @@
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button3"
+        android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20pt"
         android:layout_marginLeft="25pt"
@@ -95,31 +95,5 @@
         android:layout_height="90dp"
         android:layout_centerInParent="true"
         android:visibility="visible" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginStart="40pt"
-        android:layout_marginLeft="40pt"
-        android:layout_marginTop="10pt"
-        android:background="@color/colorPrimary"
-        android:onClick="MostrarFotos"
-        android:text="@string/cinza" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginStart="35pt"
-        android:layout_marginLeft="35pt"
-        android:layout_marginTop="10pt"
-        android:layout_toEndOf="@id/button2"
-        android:layout_toRightOf="@id/button2"
-        android:background="@color/colorPrimary"
-        android:onClick="MostrarFotos"
-        android:text="@string/limiarizada" />
 
 </RelativeLayout>

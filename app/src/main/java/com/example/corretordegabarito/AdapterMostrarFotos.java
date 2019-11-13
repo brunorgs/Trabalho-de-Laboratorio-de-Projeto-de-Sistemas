@@ -16,12 +16,10 @@ public class AdapterMostrarFotos extends RecyclerView.Adapter<ViewHolderMostrarF
 
     File [] file;
     int x = 0;
-    char modo;
 
-    public AdapterMostrarFotos (File file1,File file2,File file3,char modo1)
+    public AdapterMostrarFotos (File file1,File file2,File file3)
     {
         file = new File[3];
-        modo = modo1;
     }
 
     @Override
@@ -59,18 +57,6 @@ public class AdapterMostrarFotos extends RecyclerView.Adapter<ViewHolderMostrarF
             }
             Bitmap bitmap = BitmapFactory.decodeFile(file[position].getAbsolutePath());
             Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-            if (modo == 'C') {
-
-                Mat colorida = OpenCV.convertBitmap2Mat(bitmap1);
-                Mat cinza = OpenCV.converterParaCinza(colorida);
-                bitmap1 = OpenCV.convertMat2Bitmap(cinza);
-            }
-            else if(modo == 'L') {
-                Mat colorida = OpenCV.convertBitmap2Mat(bitmap1);
-                Mat cinza = OpenCV.converterParaCinza(colorida);
-                Mat limiarizada = OpenCV.aplicarLimiarizacao(cinza);
-                bitmap1 = OpenCV.convertMat2Bitmap(limiarizada);
-            }
             viewHolderMostrarFotos.foto.setImageBitmap(bitmap1);
             if (file[position].getName().equals("Branco.jpg"))
             {

@@ -182,18 +182,6 @@ public class MainActivity extends AppCompatActivity {
         if (file.exists() || file1.exists() || file2.exists())
         {
             progressBar.setVisibility(View.VISIBLE);
-            if (view.getId() == R.id.button)
-            {
-                intent.putExtra("tipo",' ');
-            }
-            else if(view.getId() == R.id.button2)
-            {
-                intent.putExtra("tipo",'C');
-            }
-            else if(view.getId() == R.id.button3)
-            {
-                intent.putExtra("tipo",'L');
-            }
             startActivity(intent);
         }
         else
