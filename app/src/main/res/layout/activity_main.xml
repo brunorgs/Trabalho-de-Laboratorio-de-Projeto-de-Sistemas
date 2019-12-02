@@ -80,12 +80,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20pt"
-        android:layout_marginLeft="25pt"
         android:layout_marginStart="25pt"
-        android:layout_toRightOf="@id/button"
+        android:layout_marginLeft="25pt"
+        android:layout_marginTop="20pt"
         android:layout_toEndOf="@id/button"
+        android:layout_toRightOf="@id/button"
         android:background="@color/colorPrimary"
+        android:onClick="IrTelaProvaCorrigida"
         android:text="@string/corrigir" />
 
     <ProgressBar
@@ -95,5 +96,13 @@
         android:layout_height="90dp"
         android:layout_centerInParent="true"
         android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

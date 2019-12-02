@@ -1,10 +1,19 @@
 package com.example.corretordegabarito;
 
 import android.graphics.Bitmap;
+
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.List;
 
 public class OpenCV {
     public static Mat aplicarLimiarizacao(Mat imagem)
@@ -66,5 +75,13 @@ public class OpenCV {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static MatOfPoint2f convert(MatOfPoint mat) {
+        return new MatOfPoint2f(mat.toArray());
+    }
+
+    public static MatOfPoint convert(MatOfPoint2f mat) {
+        return new MatOfPoint(mat.toArray());
     }
 }

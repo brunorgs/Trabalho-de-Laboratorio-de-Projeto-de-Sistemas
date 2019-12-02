@@ -17,18 +17,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.opencv.core.Core.subtract;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -267,5 +278,104 @@ public class MainActivity extends AppCompatActivity {
             aluno = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             dadosFotoAluno = new Aluno(aluno.getWidth(),aluno.getHeight(),"Aluno.jpg",aluno.getByteCount(),file2.getParent(),"JPEG");
         }
+    }
+
+    public void IrTelaProvaCorrigida(View view)
+    {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Branco.jpg");
+        File file1 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Oficial.jpg");
+        File file2 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),"Aluno.jpg");
+        ExifInterface exifInterface = null;
+        if (file.exists() && file1.exists() && file2.exists())
+        {
+            try {
+                exifInterface = new ExifInterface(file.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            int orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Matrix matrix = new Matrix();
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            branco = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            try {
+                exifInterface = new ExifInterface(file1.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            bitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
+            oficial = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            try {
+                exifInterface = new ExifInterface(file2.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            orientacao = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            if (orientacao == ExifInterface.ORIENTATION_ROTATE_90) {
+                matrix.postRotate(90);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_180) {
+                matrix.postRotate(180);
+            } else if (orientacao == ExifInterface.ORIENTATION_ROTATE_270) {
+                matrix.postRotate(270);
+            }
+            bitmap = BitmapFactory.decodeFile(file2.getAbsolutePath());
+            aluno = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            Corrigir();
+        }
+        else
+        {
+            Toast.makeText(this,"Insira os 3 tipos de gabarito!",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void Corrigir (){
+        Mat resultado_final = new Mat();
+        Mat gabarito_mat = new Mat();
+        Mat resposta_mat = new Mat();
+        Mat branco_mat = new Mat();
+
+
+        Utils.bitmapToMat(oficial, gabarito_mat);
+        Utils.bitmapToMat(aluno, resposta_mat);
+        Utils.bitmapToMat(branco, branco_mat);
+
+        Imgproc.medianBlur(gabarito_mat, gabarito_mat, 9);
+        Imgproc.medianBlur(resposta_mat, resposta_mat, 9);
+        Mat gabarito_cinza = OpenCV.converterParaCinza(gabarito_mat);
+        Mat aluno_cinza = OpenCV.converterParaCinza(resposta_mat);
+        Mat gabarito_limiarizado = OpenCV.aplicarLimiarizacao(gabarito_cinza);
+        Mat aluno_limiarizado = OpenCV.aplicarLimiarizacao(aluno_cinza);
+        subtract(gabarito_limiarizado,aluno_limiarizado,gabarito_limiarizado);
+        Imgproc.medianBlur(gabarito_limiarizado,resultado_final,9);
+        List<MatOfPoint> contours = new ArrayList<>();
+        resultado_final = OpenCV.converterParaCinza(resultado_final);
+        Imgproc.Canny(resultado_final,resultado_final,75,200,3,true);
+        Imgproc.findContours(resultado_final,contours,new Mat(),Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
+        int quant_circulos = 0;
+        MatOfPoint2f polygon = new MatOfPoint2f();
+        for (int x = 0; x < contours.size()-2;x++)
+        {
+            Imgproc.approxPolyDP(OpenCV.convert(contours.get(x)), polygon, 20, true);
+            double area = Imgproc.contourArea(contours.get(x));
+            if ((polygon.size().height > 1) & area > 45)
+            {
+                quant_circulos++;
+            }
+        }
+        Toast.makeText(this,"Quantidade de erros:" + Integer.toString(quant_circulos),Toast.LENGTH_LONG).show();
     }
 }

@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import org.opencv.core.Mat;
-
 import java.io.File;
 
 public class AdapterMostrarFotos extends RecyclerView.Adapter<ViewHolderMostrarFotos> {
